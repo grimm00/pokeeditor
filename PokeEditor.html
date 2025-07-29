@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Stat & Ability Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for type colors */
+        .type-normal { background-color: #A8A878; color: white; }
+        .type-fire { background-color: #F08030; color: white; }
+        .type-water { background-color: #6890F0; color: white; }
+        .type-electric { background-color: #F8D030; color: black; }
+        .type-grass { background-color: #78C850; color: black; }
+        .type-ice { background-color: #98D8D8; color: black; }
+        .type-fighting { background-color: #C03028; color: white; }
+        .type-poison { background-color: #A040A0; color: white; }
+        .type-ground { background-color: #E0C068; color: black; }
+        .type-flying { background-color: #A890F0; color: white; }
+        .type-psychic { background-color: #F85888; color: white; }
+        .type-bug { background-color: #A8B820; color: white; }
+        .type-rock { background-color: #B8A038; color: white; }
+        .type-ghost { background-color: #705898; color: white; }
+        .type-dragon { background-color: #7038F8; color: white; }
+        .type-dark { background-color: #705848; color: white; }
+        .type-steel { background-color: #B8B8D0; color: black; }
+        .type-fairy { background-color: #EE99AC; color: black; }
+
+        /* Custom styles for stat values */
+        .stat-tier-6 { background-color: #FFC000; } /* < 60 */
+        .stat-tier-5 { background-color: #FFFF00; } /* 60-89 */
+        .stat-tier-4 { background-color: #E2EFDA; } /* 90-99 */
+        .stat-tier-3 { background-color: #C6EFCE; } /* 100-119 */
+        .stat-tier-2 { background-color: #BDD7EE; } /* 120-149 */
+        .stat-tier-1 { background-color: #0070C0; color: white; } /* 150+ */
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <div class="container mx-auto p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-4xl font-bold text-gray-800">Pokémon Rebalancing Tool</h1>
+            <p class="text-gray-600">Select a Pokémon, edit its stats, abilities, or types, and commit the changes.</p>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Editor Panel -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
+                <div class="mb-4">
+                    <label for="pokemon-select" class="block text-lg font-medium text-gray-700 mb-2">Select Pokémon:</label>
+                    <select id="pokemon-select" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></select>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10">
+                    <!-- Original Column -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 border-b pb-2 mb-4">Original</h3>
+                        <div id="original-view" class="space-y-3"></div>
+                    </div>
+                    <!-- Edited Column -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 border-b pb-2 mb-4">Edited</h3>
+                        <div id="edited-view" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-center">
+                    <button id="commit-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-300">
+                        Commit Changes
+                    </button>
+                </div>
+            </div>
+
+            <!-- Edited Pokémon List Panel -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold text-gray-800 border-b pb-2 mb-4">Custom Pokémon List</h2>
+                <div class="text-center mb-4">
+                     <button id="download-btn" class="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition-colors duration-300">
+                        Download Custom Data (JSON)
+                    </button>
+                </div>
+                <div id="edited-list" class="space-y-2 max-h-96 overflow-y-auto">
+                    <p class="text-gray-500">Your custom Pokémon will appear here.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Global State ---
+            let basePokemonData = [];
+            let allAbilities = [];
+            let allTypes = [];
+            let customPokemon = {}; // Store custom edits by name
+
+            // --- DOM Elements ---
+            const selectElement = document.getElementById('pokemon-select');
+            const originalView = document.getElementById('original-view');
+            const editedView = document.getElementById('edited-view');
+            const commitBtn = document.getElementById('commit-btn');
+            const editedList = document.getElementById('edited-list');
+            const downloadBtn = document.getElementById('download-btn');
+
+            // --- Utility Functions ---
+            const getStatTierClass = (stat) => {
+                const s = parseInt(stat, 10);
+                if (s >= 150) return 'stat-tier-1';
+                if (s >= 120) return 'stat-tier-2';
+                if (s >= 100) return 'stat-tier-3';
+                if (s >= 90) return 'stat-tier-4';
+                if (s >= 60) return 'stat-tier-5';
+                return 'stat-tier-6';
+            };
+
+            const getTypeClass = (type) => `type-${type.toLowerCase()}`;
+            
+            // --- Core Functions ---
+            async function initialize() {
+                try {
+                    const response = await fetch('pokemon_cache.json');
+                    if (!response.ok) {
+                        throw new Error("pokemon_cache.json not found. Please place it in the same folder as this HTML file.");
+                    }
+                    basePokemonData = await response.json();
+                    
+                    // Populate abilities and types for dropdowns
+                    const abilitySet = new Set();
+                    const typeSet = new Set();
+                    basePokemonData.forEach(p => {
+                        if (p['Ability 1']) abilitySet.add(p['Ability 1']);
+                        if (p['Ability 2']) abilitySet.add(p['Ability 2']);
+                        if (p['Hidden Ability']) abilitySet.add(p['Hidden Ability']);
+                        if (p['Type 1']) typeSet.add(p['Type 1']);
+                        if (p['Type 2']) typeSet.add(p['Type 2']);
+                    });
+                    allAbilities = Array.from(abilitySet).sort();
+                    allTypes = Array.from(typeSet).sort();
+
+                    updatePokemonSelector();
+                    selectElement.dispatchEvent(new Event('change')); // Trigger initial view
+                } catch (error) {
+                    document.body.innerHTML = `<div class="p-8 text-center text-red-500 font-bold">${error.message}</div>`;
+                }
+            }
+
+            function updatePokemonSelector() {
+                const currentSelection = selectElement.value;
+                const allNames = [...new Set([...Object.keys(customPokemon), ...basePokemonData.map(p => p.Name)])].sort();
+                
+                selectElement.innerHTML = allNames.map(name => `<option value="${name}">${name}</option>`).join('');
+                selectElement.value = currentSelection || allNames[0];
+            }
+            
+            function displayPokemon(name) {
+                const data = customPokemon[name] || basePokemonData.find(p => p.Name === name);
+                if (!data) return;
+
+                // Display Original
+                originalView.innerHTML = `
+                    ${renderField('Ability 1', data['Ability 1'])}
+                    ${renderField('Ability 2', data['Ability 2'])}
+                    ${renderField('Hidden Ability', data['Hidden Ability'])}
+                    ${renderTypeField('Type 1', data['Type 1'])}
+                    ${renderTypeField('Type 2', data['Type 2'])}
+                    <hr class="my-3"/>
+                    ${renderStatField('HP', data.HP)}
+                    ${renderStatField('Attack', data.Attack)}
+                    ${renderStatField('Defense', data.Defense)}
+                    ${renderStatField('Sp Atk', data['Sp Atk'])}
+                    ${renderStatField('Sp Def', data['Sp Def'])}
+                    ${renderStatField('Speed', data.Speed)}
+                    <hr class="my-3"/>
+                    ${renderField('BST', data.BST, true)}
+                `;
+
+                // Display Editable
+                editedView.innerHTML = `
+                    ${renderEditableAbility('Ability 1', allAbilities)}
+                    ${renderEditableAbility('Ability 2', allAbilities)}
+                    ${renderEditableAbility('Hidden Ability', allAbilities)}
+                    ${renderEditableType('Type 1', allTypes)}
+                    ${renderEditableType('Type 2', allTypes)}
+                    <hr class="my-3"/>
+                    ${renderEditableStat('HP')}
+                    ${renderEditableStat('Attack')}
+                    ${renderEditableStat('Defense')}
+                    ${renderEditableStat('Sp Atk')}
+                    ${renderEditableStat('Sp Def')}
+                    ${renderEditableStat('Speed')}
+                    <hr class="my-3"/>
+                    <div class="grid grid-cols-2 items-center gap-4">
+                        <span class="text-gray-600">Calculated BST:</span>
+                        <div class="flex justify-end">
+                            <span id="calculated-bst" class="font-bold text-gray-800 px-3 py-1 rounded w-20 text-center"></span>
+                        </div>
+                    </div>
+                `;
+
+                // Add event listeners for live BST calculation
+                const statInputs = editedView.querySelectorAll('input[type="number"]');
+                const bstDisplay = editedView.querySelector('#calculated-bst');
+
+                const calculateBst = () => {
+                    let bst = 0;
+                    const originalData = customPokemon[name] || basePokemonData.find(p => p.Name === name);
+                    const originalStats = {
+                        HP: originalData.HP, Attack: originalData.Attack, Defense: originalData.Defense,
+                        'Sp Atk': originalData['Sp Atk'], 'Sp Def': originalData['Sp Def'], Speed: originalData.Speed
+                    };
+
+                    Object.keys(originalStats).forEach(field => {
+                        const input = editedView.querySelector(`#edit-${field.toLowerCase().replace(' ', '-')}`);
+                        const value = parseInt(input.value, 10);
+                        bst += !isNaN(value) && value > 0 ? value : parseInt(originalStats[field], 10);
+                    });
+
+                    bstDisplay.textContent = bst;
+                    bstDisplay.className = `font-bold text-gray-800 px-3 py-1 rounded w-20 text-center ${getStatTierClass(bst)}`;
+                };
+
+                statInputs.forEach(input => input.addEventListener('input', calculateBst));
+                calculateBst(); // Initial calculation on load
+            }
+
+            function renderField(label, value, isBold = false) {
+                return `
+                    <div class="grid grid-cols-2 items-center gap-4">
+                        <span class="text-gray-600">${label}:</span>
+                        <div class="text-right">
+                            <span class="${isBold ? 'font-bold' : ''} text-gray-800">${value || 'N/A'}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function renderTypeField(label, value) {
+                 if (!value) return renderField(label, value);
+                 return `
+                    <div class="grid grid-cols-2 items-center gap-4">
+                        <span class="text-gray-600">${label}:</span>
+                        <div class="flex justify-end">
+                            <span class="px-3 py-1 rounded-full text-sm font-semibold ${getTypeClass(value)}">${value}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function renderStatField(label, value) {
+                return `
+                    <div class="grid grid-cols-2 items-center gap-4">
+                        <span class="text-gray-600">${label}:</span>
+                        <div class="flex justify-end">
+                            <span class="font-bold text-gray-800 px-3 py-1 rounded w-20 text-center ${getStatTierClass(value)}">${value}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function renderEditableStat(label) {
+                const id = `edit-${label.toLowerCase().replace(' ', '-')}`;
+                return `
+                     <div class="grid grid-cols-2 items-center gap-4">
+                        <label for="${id}" class="text-gray-600">${label}:</label>
+                        <input type="number" id="${id}" class="w-full p-1 border rounded-md text-right" placeholder="Original">
+                    </div>
+                `;
+            }
+
+            function renderEditableAbility(label, options) {
+                const id = `edit-${label.toLowerCase().replace(' ', '-')}`;
+                return `
+                    <div class="grid grid-cols-2 items-center gap-4">
+                        <label for="${id}" class="text-gray-600">${label}:</label>
+                        <select id="${id}" class="w-full p-1 border rounded-md">
+                            <option value="">-- Keep Original --</option>
+                            ${options.map(o => `<option value="${o}">${o}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+            }
+             function renderEditableType(label, options) {
+                const id = `edit-${label.toLowerCase().replace(' ', '-')}`;
+                return `
+                    <div class="grid grid-cols-2 items-center gap-4">
+                        <label for="${id}" class="text-gray-600">${label}:</label>
+                        <select id="${id}" class="w-full p-1 border rounded-md">
+                            <option value="">-- Keep Original --</option>
+                            ${options.map(o => `<option value="${o}">${o}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+            }
+
+            function updateCustomList() {
+                if (Object.keys(customPokemon).length === 0) {
+                    editedList.innerHTML = `<p class="text-gray-500">Your custom Pokémon will appear here.</p>`;
+                    return;
+                }
+                editedList.innerHTML = Object.values(customPokemon).map(p => `
+                    <div class="p-2 rounded bg-gray-200 text-gray-800 cursor-pointer hover:bg-indigo-200" onclick="document.getElementById('pokemon-select').value='${p.Name}'; document.getElementById('pokemon-select').dispatchEvent(new Event('change'))">
+                        ${p.Name} <span class="text-xs text-gray-600">(BST: ${p.BST})</span>
+                    </div>
+                `).join('');
+            }
+
+            function handleCommit() {
+                const selectedName = selectElement.value;
+                const originalData = customPokemon[selectedName] || basePokemonData.find(p => p.Name === selectedName);
+                
+                const getFinalValue = (field, originalValue) => {
+                    const input = document.getElementById(`edit-${field.toLowerCase().replace(' ', '-')}`);
+                    return input && input.value ? input.value : originalValue;
+                };
+
+                const finalData = {
+                    '#': originalData['#'],
+                    Name: originalData.Name,
+                    'Ability 1': getFinalValue('Ability 1', originalData['Ability 1']),
+                    'Ability 2': getFinalValue('Ability 2', originalData['Ability 2']),
+                    'Hidden Ability': getFinalValue('Hidden Ability', originalData['Hidden Ability']),
+                    'Type 1': getFinalValue('Type 1', originalData['Type 1']),
+                    'Type 2': getFinalValue('Type 2', originalData['Type 2']),
+                    HP: parseInt(getFinalValue('HP', originalData.HP), 10),
+                    Attack: parseInt(getFinalValue('Attack', originalData.Attack), 10),
+                    Defense: parseInt(getFinalValue('Defense', originalData.Defense), 10),
+                    'Sp Atk': parseInt(getFinalValue('Sp Atk', originalData['Sp Atk']), 10),
+                    'Sp Def': parseInt(getFinalValue('Sp Def', originalData['Sp Def']), 10),
+                    Speed: parseInt(getFinalValue('Speed', originalData.Speed), 10),
+                };
+
+                finalData.BST = finalData.HP + finalData.Attack + finalData.Defense + finalData['Sp Atk'] + finalData['Sp Def'] + finalData.Speed;
+
+                customPokemon[selectedName] = finalData;
+                
+                updatePokemonSelector();
+                displayPokemon(selectedName);
+                updateCustomList();
+                
+                // Clear input fields
+                document.querySelectorAll('#edited-view input, #edited-view select').forEach(el => el.value = '');
+            }
+
+            function handleDownload() {
+                if (Object.keys(customPokemon).length === 0) {
+                    alert("No custom Pokémon to download!");
+                    return;
+                }
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customPokemon, null, 2));
+                const downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href", dataStr);
+                downloadAnchorNode.setAttribute("download", "custom_pokemon.json");
+                document.body.appendChild(downloadAnchorNode);
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+            }
+
+            // --- Event Listeners ---
+            selectElement.addEventListener('change', (e) => displayPokemon(e.target.value));
+            commitBtn.addEventListener('click', handleCommit);
+            downloadBtn.addEventListener('click', handleDownload);
+
+            // --- Initial Load ---
+            initialize();
+        });
+    </script>
+</body>
+</html>
