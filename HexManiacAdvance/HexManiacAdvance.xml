@@ -1,0 +1,434 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HexManiacAdvance</name>
+    </assembly>
+    <members>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.AngleBorder">
+            <summary>
+            AngleBorder
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.AngleBorder.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.AngleButton">
+            <summary>
+            AngleButton
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.AngleButton.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.AngleComboBox">
+            <summary>
+            AngleComboBox
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.AngleComboBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.AngleMenuItem">
+            <summary>
+            Interaction logic for AngleMenuItem.xaml
+            </summary>
+            <summary>
+            AngleMenuItem
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.AngleMenuItem.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.AngleTextBox">
+            <summary>
+            AngleTextBox
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.AngleTextBox.UpdateFieldTextBox(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            TextBlock is a lot faster than TextBox.
+            And we only ever really need to have the focus in a single textbox at a time.
+            Therefore, for performance reasons, we'd rather have all the non-active textboxes just
+            *look* like TextBoxes, and really be TextBlocks instead.
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.AngleTextBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.AutocompleteOverlay">
+            <summary>
+            AutocompleteOverlay
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.AutocompleteOverlay.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.ColumnStackPanel">
+            <summary>
+            A cross between a WrapPanel and a StackPanel.
+            Like a WrapPanel, new elements are added left-to-right, and further elements appear below the first row.
+            However, each column calculates its height separately:
+              in a 3-column layout, the 4th element will appear in the leftmost column,
+              directly after the end of the 1st element, ignoring the size of the 2nd and 3rd elemenst.
+            </summary>
+        </member>
+        <member name="F:HavenSoft.HexManiac.WPF.Controls.ColumnStackPanel.expectedHeaderCount">
+            <summary>
+            During Measure, this grows based on the number of Headers found.
+            During Arrange, this limits the maximum number of columns.
+            </summary>
+        </member>
+        <member name="F:HavenSoft.HexManiac.WPF.Controls.ColumnStackPanel.IsHeaderProperty">
+            <summary>
+            Attached property for children within the panel. Set to 'true' in order to move to the next column.
+            </summary>
+        </member>
+        <member name="F:HavenSoft.HexManiac.WPF.Controls.ColumnStackPanel.MinimumColumnWidthProperty">
+            <summary>
+            The minimum width needed for a column. The number of columns will scale based on available width.
+            </summary>
+        </member>
+        <member name="F:HavenSoft.HexManiac.WPF.Controls.ColumnStackPanel.ColumnMarginProperty">
+            <summary>
+            The space between columns. Should be left empty.
+            </summary>
+        </member>
+        <member name="F:HavenSoft.HexManiac.WPF.Controls.ColumnStackPanel.HeaderMarginProperty">
+            <summary>
+            The space between the end of one section and the start of a new section below it within the same column.
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.CommonTableStreamControl">
+            <summary>
+            CommonTableStreamControl
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.CommonTableStreamControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.DexReorderView">
+            <summary>
+            DexReorderView
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.DexReorderView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.EditableComboBox">
+            <summary>
+            EditableComboBox
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.EditableComboBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.HexContentToolTip">
+            <summary>
+            HexContentToolTip
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.HexContentToolTip.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.ImageEditorView">
+            <summary>
+            ImageEditorView
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.ImageEditorView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.MapTab">
+            <summary>
+            MapTab
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.MapTab.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.PaletteControl">
+            <summary>
+            PaletteControl
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.PaletteControl.ApplyDif(System.Int32,System.ValueTuple{System.Double,System.Double,System.Double})">
+            <summary>
+            Grabs the initial color at index and applies a HSB dif to it, returning the new short color
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.PaletteControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.PythonPanel">
+            <summary>
+            PythonPanel
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.PythonPanel.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.SelectedBlockEditor">
+            <summary>
+            SelectedBlockEditor
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.SelectedBlockEditor.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.StartScreen">
+            <summary>
+            StartScreen
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.StartScreen.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.MeasureEmptyDecorator">
+            <summary>
+            Causes the element within the decorator to not take part in the Measure step of WPF's Measure-Arrange loop.
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.Swatch">
+            <summary>
+            Swatch
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.Swatch.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.DesktopColorPicker">
+            <summary>
+            Lifted from https://www.codeproject.com/Articles/374887/Eye-Dropper-control-in-WPF
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.TabView">
+            <summary>
+            TabView
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.TabView.AnchorSelectionChanged(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            When a change comes in from the UI
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.TabView.HandleViewportPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            When a change comes in from the ViewModel
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.TabView.TableSelected(System.Object,System.EventArgs)">
+            <summary>
+            If the current table is selected, the ViewModel still wants
+            to know the user input so the ViewModel can Goto the table.
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.TabView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.TextBoxLookAlike">
+            <summary>
+            TextBoxLookAlike
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.TextBoxLookAlike.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.TextEditor">
+            <summary>
+            TextEditor
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.TextEditor.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.TextStyleConverter">
+            <summary>
+            Extracts the 'style' of the text by looking at the text.
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.TutorialControl">
+            <summary>
+            TutorialControl
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.TutorialControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Controls.WildPokemonControl">
+            <summary>
+            WildPokemonControl
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Controls.WildPokemonControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Implementations.FormatDrawer.RenderRow">
+            <summary>
+            Rendering individual cells is too slow!
+            For formats that follow the standard method of drawing (truncate and center, one color/size/style),
+            we can render every cell of that format in a single pass.
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Implementations.FormatDrawer.Draw(System.String,System.String,System.Double,System.Int32,System.Int32,System.String,System.Boolean)">
+            <summary>
+            This function is full of dragons. You probably don't want to touch it.
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Resources.Icons">
+            <summary>
+            Icons
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Resources.Icons.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Resources.RotateTransformExtension">
+            <example>
+            {hs:RotateTransform 60, 0, 0}
+            </example>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Resources.GeometryExtension">
+            <example>
+            {hs:Geometry 'M0,0 L0,1 1,1 1,0 Z'}
+            </example>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Resources.IconExtension">
+            <summary>
+            Icons are taken from Icons.xaml
+            Requires that there is an Icons instance stored at "Icons" in the app resources.
+            Easiest way to ensure this is to include Resources.xaml
+            </summary>
+            <example>
+            {hs:Icons Save}
+            </example>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Resources.MethodCommandExtension">
+            <summary>
+            Creates a Command from a method on the ViewModel
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Windows.AboutWindow">
+            <summary>
+            AboutWindow
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Windows.AboutWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Windows.App">
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Windows.App.SetInitialWorkingDirectory">
+            <summary>
+            Generally, the initial working directory is set to wherever the program was launched from.
+            In the case of command line usage or dropping a file onto the EXE, that's not the EXE's location.
+            We want the initial loading directory to match the EXE's path so we can find the reference files.
+            Example: armReference.txt, scriptReference.txt
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Windows.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Windows.MainWindow">
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Windows.MainWindow.TabMouseMove(System.Object,System.Windows.Input.MouseEventArgs)">
+            <summary>
+            If the mouse has dragged the tab through more than half of the next tab, swap the tabs horizontally.
+            </summary>
+            <remarks>
+            The "more than half through the next tab" metric was chosen to deal with disparity between widths of tabs.
+            A smaller number would cause tabs to flicker when a narrow tab is dragged past a wide tab.
+            </remarks>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Windows.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Windows.OptionDialog">
+            <summary>
+            OptionDialog
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Windows.OptionDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Windows.RequestTextDialog">
+            <summary>
+            RequestTextDialog
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Windows.RequestTextDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HavenSoft.HexManiac.WPF.Windows.ThemeSelector">
+            <summary>
+            ThemeSelector
+            </summary>
+        </member>
+        <member name="M:HavenSoft.HexManiac.WPF.Windows.ThemeSelector.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>

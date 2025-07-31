@@ -1,0 +1,18 @@
+{
+  "Magmortar": {
+    "#": 467,
+    "Name": "Magmortar",
+    "Ability 1": "Flame Body",
+    "Ability 2": null,
+    "Hidden Ability": "Vital Spirit",
+    "Type 1": "Fire",
+    "Type 2": null,
+    "HP": 100,
+    "Attack": 35,
+    "Defense": 87,
+    "Sp Atk": 135,
+    "Sp Def": 95,
+    "Speed": 83,
+    "BST": 535
+  }
+}

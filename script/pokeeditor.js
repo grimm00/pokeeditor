@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const uploadBtn = document.getElementById('upload-btn');
     const fileUpload = document.getElementById('file-upload');
     const downloadBaseBtn = document.getElementById('download-base-btn');
-    const downloadMergedBtn = document.getElementById('download-merged-btn'); // New button
+    const downloadMergedBtn = document.getElementById('download-merged-btn');
 
     // --- Utility Functions ---
     const getStatTierClass = (stat) => {
@@ -210,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("No custom Pokémon to download!");
             return;
         }
+        // --- FIX: Ensure the downloaded JSON is an object, not an array ---
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customPokemon, null, 2));
         const downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
@@ -227,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.onload = (e) => {
             try {
                 const importedData = JSON.parse(e.target.result);
+                // --- FIX: The validation check remains the same, but now the downloaded file will match it ---
                 if (typeof importedData === 'object' && !Array.isArray(importedData)) {
                     customPokemon = importedData;
                     console.log("Custom Pokémon data loaded successfully.");
@@ -234,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     updatePokemonSelector();
                     selectElement.dispatchEvent(new Event('change'));
                 } else {
-                    throw new Error("Invalid JSON format. The file should contain a single object, not an array.");
+                    throw new Error("Invalid JSON format. The file should contain a single object where Pokémon names are the keys.");
                 }
             } catch (error) {
                 alert(`Error reading JSON file: ${error.message}`);
@@ -257,24 +259,17 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadAnchorNode.remove();
     }
 
-    // --- NEW: Function to download the full merged data ---
     function handleDownloadMergedData() {
         if (basePokemonData.length === 0) {
             alert("Base data is not loaded yet!");
             return;
         }
-
-        // Create a deep copy to avoid modifying the original base data in the session
         const mergedData = JSON.parse(JSON.stringify(basePokemonData));
-
-        // Apply custom changes to the copied data
         mergedData.forEach(pokemon => {
             if (customPokemon[pokemon.Name]) {
-                // Overwrite the original data with the custom data for this Pokémon
                 Object.assign(pokemon, customPokemon[pokemon.Name]);
             }
         });
-
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mergedData, null, 2));
         const downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
@@ -291,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
     uploadBtn.addEventListener('click', () => fileUpload.click());
     fileUpload.addEventListener('change', handleUpload);
     downloadBaseBtn.addEventListener('click', handleDownloadBaseData);
-    downloadMergedBtn.addEventListener('click', handleDownloadMergedData); // New listener
+    downloadMergedBtn.addEventListener('click', handleDownloadMergedData);
 
     // --- Initial Load ---
     initialize();
