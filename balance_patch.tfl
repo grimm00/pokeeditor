@@ -298,7 +298,7 @@
 +#Ludicolo#, 80, 70, 70, 70, 90, 100, Water, Grass, 45, 181, (0 0 0 0 0 3), ????????, 185, "50% Male & 50% Female", 15, 50, "Medium Slow", Water1, Grass, "Swift Swim", "Rain Dish", 0, (Red true), 20
 +#Seedot#, 40, 40, 50, 30, 30, 30, Grass, Grass, 255, 74, (0 0 1 0 0 0), ????????, 236, "50% Male & 50% Female", 15, 50, "Medium Slow", Field, Grass, Chlorophyll, "Early Bird", 0, (Red true), 207
 +#Nuzleaf#, 70, 70, 40, 60, 60, 40, Grass, Dark, 120, 141, (0 2 0 0 0 0), ????????, 236, "50% Male & 50% Female", 15, 50, "Medium Slow", Field, Grass, Chlorophyll, "Early Bird", 0, (Red true), 207
-+#Shiftry#, 90, 100, 60, 80, 90, 60, Grass, Dark, 45, 181, (0 3 0 0 0 0), ????????, 236, "50% Male & 50% Female", 15, 50, "Medium Slow", Field, Grass, Chlorophyll, "Early Bird", 0, (Red true), 207
++#Shiftry#, 94, 50, 60, 96, 120, 60, Grass, Dark, 45, 181, (0 3 0 0 0 0), ????????, 236, "50% Male & 50% Female", 15, 50, "Medium Slow", Field, Grass, "Chlorophyll", "Wind Rider", 0, (Red true), 86
 +#Nincada#, 31, 45, 90, 40, 30, 30, Bug, Ground, 255, 65, (0 0 1 0 0 0), ????????, 203, "50% Male & 50% Female", 15, 50, Erratic, Bug, Bug, "Compound Eyes", -------, 0, (Red true), 50
 +#Ninjask#, 61, 90, 45, 160, 50, 50, Bug, Flying, 120, 155, (0 0 0 2 0 0), ????????, ????????, "50% Male & 50% Female", 15, 50, Erratic, Bug, Bug, "Speed Boost", -------, 0, (Red true), 102
 +#Shedinja#, 1, 90, 45, 40, 30, 30, Bug, Ghost, 45, 95, (2 0 0 0 0 0), ????????, ????????, Genderless, 15, 50, Erratic, Mineral, Mineral, "Wonder Guard", -------, 0, (Red true), 0
@@ -343,7 +343,7 @@
 +#Sealeo#, 90, 60, 70, 45, 75, 70, Ice, Water, 120, 128, (2 0 0 0 0 0), ????????, ????????, "50% Male & 50% Female", 20, 50, "Medium Slow", Water1, Field, "Thick Fat", "Ice Body", 0, (Red true), 12
 +#Walrein#, 110, 80, 90, 65, 95, 90, Ice, Water, 45, 192, (3 0 0 0 0 0), ????????, ????????, "50% Male & 50% Female", 20, 50, "Medium Slow", Water1, Field, "Thick Fat", "Ice Body", 0, (Red true), 86
 +#Cacnea#, 50, 85, 40, 35, 85, 40, Grass, Grass, 190, 97, (0 0 0 0 1 0), ????????, 583, "50% Male & 50% Female", 20, 35, "Medium Slow", Grass, Human-Like, "Sand Veil", Overcoat, 0, (Red true), 11
-+#Cacturne#, 70, 115, 60, 55, 115, 60, Grass, Dark, 60, 177, (0 1 0 0 1 0), ????????, 583, "50% Male & 50% Female", 20, 35, "Medium Slow", Grass, Human-Like, "Sand Veil", Prankster, 0, (Red true), 11
++#Cacturne#, 110, 125, 70, 65, 35, 70, Grass, Dark, 60, 177, (0 1 0 0 1 0), ????????, 583, "50% Male & 50% Female", 20, 35, "Medium Slow", Grass, Human-Like, "Water Absorb", "Sand Veil", 0, (Red true), 46
 +#Snorunt#, 50, 50, 50, 50, 50, 50, Ice, Ice, 190, 74, (1 0 0 0 0 0), ????????, 582, "50% Male & 50% Female", 20, 50, "Medium Fast", Fairy, Mineral, "Inner Focus", "Ice Body", 0, (Red true), 106
 +#Glalie#, 80, 80, 80, 80, 80, 80, Ice, Ice, 75, 187, (2 0 0 0 0 0), ????????, 212, "50% Male & 50% Female", 20, 50, "Medium Fast", Fairy, Mineral, "Inner Focus", "Ice Body", 0, (Red true), 106
 +#Lunatone#, 90, 55, 65, 70, 95, 85, Rock, Psychc, 45, 150, (0 0 0 0 2 0), 108, 94, Genderless, 25, 50, Fast, Mineral, Mineral, Levitate, -------, 0, (Red true), 0
@@ -506,7 +506,7 @@
 +#Drapion#, 70, 90, 110, 95, 60, 75, Poison, Dark, 45, 204, (0 0 2 0 0 0), ????????, 211, "50% Male & 50% Female", 20, 50, Slow, Bug, Water3, "Battle Armor", Sniper, 0, (Red true), 84
 +#Croagunk#, 48, 61, 40, 50, 61, 40, Poison, Fight, 140, 83, (0 1 0 0 0 0), ????????, "Black Sludge", "50% Male & 50% Female", 10, 100, "Medium Fast", Human-Like, Human-Like, Anticipation, "Dry Skin", 0, (Red true), 209
 +#Toxicroak#, 83, 106, 65, 85, 86, 65, Poison, Fight, 75, 181, (0 2 0 0 0 0), ????????, "Black Sludge", "50% Male & 50% Female", 20, 50, "Medium Fast", Human-Like, Human-Like, Anticipation, "Dry Skin", 0, (Red true), 209
-+#Carnivine#, 74, 100, 72, 46, 90, 72, Grass, Grass, 200, 164, (0 2 0 0 0 0), ????????, ????????, "50% Male & 50% Female", 25, 50, Slow, Grass, Grass, Levitate, -------, 0, (Red true), 182
++#Carnivine#, 104, 150, 72, 16, 40, 72, Grass, Dark, 200, 164, (0 2 0 0 0 0), ????????, ????????, "50% Male & 50% Female", 25, 50, Slow, Grass, Grass, "Strong Jaw", "Gluttony", 0, (Red true), 81
 +#Finneon#, 49, 49, 56, 66, 49, 61, Water, Water, 190, 90, (0 0 0 1 0 0), ????????, 542, "50% Male & 50% Female", 20, 50, Erratic, Water2, Water2, "Swift Swim", "Storm Drain", 0, (Red true), 177
 +#Lumineon#, 69, 69, 76, 91, 69, 86, Water, Water, 75, 156, (0 0 0 2 0 0), ????????, 542, "50% Male & 50% Female", 20, 50, Erratic, Water2, Water2, "Swift Swim", "Storm Drain", 0, (Red true), 177
 +#Mantyke#, 45, 20, 50, 50, 60, 120, Water, Flying, 25, 108, (0 0 0 0 0 1), ????????, ????????, "50% Male & 50% Female", 25, 50, Slow, Undiscovered, Undiscovered, "Swift Swim", "Water Absorb", 0, (Red true), 41
@@ -518,7 +518,7 @@
 +#Rhyperior#, 115, 140, 130, 40, 55, 55, Ground, Rock, 30, 217, (0 3 0 0 0 0), ????????, ????????, "50% Male & 50% Female", 20, 50, Slow, Monster, Field, "Lightning Rod", Filter, 0, (Red true), 91
 +#Tangrowth#, 100, 100, 125, 50, 110, 50, Grass, Grass, 30, 211, (0 0 2 0 0 0), ????????, ????????, "50% Male & 50% Female", 20, 50, "Medium Fast", Grass, Grass, Chlorophyll, "Leaf Guard", 0, (Red true), 86
 +#Electivire#, 75, 123, 67, 95, 95, 85, Electr, Electr, 30, 199, (0 3 0 0 0 0), ????????, 234, "75% Male", 25, 50, "Medium Fast", Human-Like, Human-Like, "Motor Drive", -------, 0, (Red true), 15
-+#Magmortar#, 100, 35, 87, 83, 135, 95, Fire, Fire, 30, 199, (0 0 0 0 3 0), ????????, 113, "75% Male", 25, 50, "Medium Fast", Human-Like, Human-Like, "Flame Body", "-------", 0, (Red true), 92
++#Magmortar#, 100, 35, 87, 83, 135, 95, Fire, Fire, 30, 199, (0 0 0 0 3 0), ????????, 113, "75% Male", 25, 50, "Medium Fast", Human-Like, Human-Like, "Flame Body", "Vital Spirit", 0, (Red true), 126
 +#Togekiss#, 85, 50, 95, 80, 120, 115, 23, Flying, 30, 220, (0 0 0 0 2 1), ????????, ????????, "87% Male", 20, 50, Fast, Flying, Fairy, Hustle, "Serene Grace", 0, (Red true), 84
 +#Yanmega#, 86, 76, 86, 95, 116, 56, Bug, Flying, 30, 198, (0 2 0 0 0 0), ????????, 237, "50% Male & 50% Female", 20, 50, "Medium Fast", Bug, Bug, "Speed Boost", "Tinted Lens", 0, (Red true), 190
 +#Leafeon#, 65, 110, 130, 95, 60, 65, Grass, Grass, 45, 196, (0 0 2 0 0 0), ????????, ????????, "87% Male", 35, 35, "Medium Fast", Field, Field, "Sap Sipper", "Sap Sipper", 0, (Red true), 34
@@ -607,7 +607,7 @@
 +#Krookodile#, 95, 117, 80, 92, 65, 70, Ground, Dark, 45, 229, (0 3 0 0 0 0), 206, ????????, "50% Male & 50% Female", 20, 50, "Medium Slow", Field, Field, Intimidate, Moxie, 0, (Red true), 187
 +#Darumaka#, 70, 90, 45, 50, 15, 45, Fire, Fire, 120, 63, (0 1 0 0 0 0), 136, ????????, "50% Male & 50% Female", 20, 50, "Medium Slow", Field, Field, Hustle, -------, 0, (Red true), 39
 +#Darmanitan#, 105, 140, 55, 95, 30, 55, Fire, Fire, 60, 168, (0 2 0 0 0 0), 136, ????????, "50% Male & 50% Female", 20, 50, "Medium Slow", Field, Field, "Sheer Force", -------, 0, (Red true), 155
-+#Maractus#, 75, 86, 67, 60, 106, 67, Grass, Grass, 255, 161, (0 0 0 0 2 0), ????????, 205, "50% Male & 50% Female", 20, 50, "Medium Fast", Grass, Grass, "Water Absorb", Chlorophyll, 0, (Red true), 131
++#Maractus#, 95, 36, 82, 60, 106, 82, Grass, Grass, 255, 161, (0 0 0 0 2 0), ????????, 205, "50% Male & 50% Female", 20, 50, "Medium Fast", Grass, Grass, "Own Tempo", "Thick Fat", 0, (Red true), 130
 +#Dwebble#, 50, 65, 85, 55, 35, 35, Bug, Rock, 190, 65, (0 0 1 0 0 0), ????????, 204, "50% Male & 50% Female", 20, 50, "Medium Fast", Bug, Mineral, Sturdy, "Shell Armor", 0, (Red true), 193
 +#Crustle#, 70, 105, 125, 45, 65, 75, Bug, Rock, 75, 166, (0 0 2 0 0 0), ????????, 204, "50% Male & 50% Female", 20, 50, "Medium Fast", Bug, Mineral, Sturdy, "Shell Armor", 0, (Red true), 193
 +#Scraggy#, 50, 75, 70, 48, 35, 70, Dark, Fight, 180, 70, (0 1 0 0 0 0), ????????, 581, "50% Male & 50% Female", 15, 35, "Medium Fast", Dragon, Field, "Shed Skin", Moxie, 0, (Red true), 22
