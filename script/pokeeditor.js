@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const commitBtn = document.getElementById('commit-btn');
     const editedList = document.getElementById('edited-list');
     const downloadBtn = document.getElementById('download-btn');
+    const uploadBtn = document.getElementById('upload-btn');
+    const fileUpload = document.getElementById('file-upload');
+    const downloadBaseBtn = document.getElementById('download-base-btn');
+    const downloadMergedBtn = document.getElementById('download-merged-btn'); // New button
 
     // --- Utility Functions ---
     const getStatTierClass = (stat) => {
@@ -23,15 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'stat-tier-6';
     };
 
-    // --- NEW: A separate color scale specifically for the BST ---
     const getBstTierClass = (bst) => {
         const s = parseInt(bst, 10);
-        if (s >= 700) return 'stat-tier-1'; // Legendary
-        if (s >= 600) return 'stat-tier-2'; // Excellent
-        if (s >= 500) return 'stat-tier-3'; // Good
-        if (s >= 400) return 'stat-tier-4'; // Average
-        if (s >= 300) return 'stat-tier-5'; // Below Average
-        return 'stat-tier-6'; // Poor
+        if (s >= 700) return 'stat-tier-1';
+        if (s >= 600) return 'stat-tier-2';
+        if (s >= 500) return 'stat-tier-3';
+        if (s >= 400) return 'stat-tier-4';
+        if (s >= 300) return 'stat-tier-5';
+        return 'stat-tier-6';
     };
 
     const getTypeClass = (type) => `type-${type ? type.toLowerCase().replace(' ', '-') : ''}`;
@@ -81,35 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!data) return;
 
         let gridHtml = `
-            <!-- Header Row -->
             <div class="text-gray-600 font-semibold">Category</div>
             <div class="text-2xl font-semibold text-gray-800 border-b pb-2 mb-2">Original</div>
             <div class="text-2xl font-semibold text-gray-800 border-b pb-2 mb-2">Edited</div>
-
-            <!-- Ability Rows -->
             ${generateRow('Ability 1', data['Ability 1'], 'ability')}
             ${generateRow('Ability 2', data['Ability 2'], 'ability')}
             ${generateRow('Hidden Ability', data['Hidden Ability'], 'ability')}
-            
-            <!-- Type Rows -->
             ${generateRow('Type 1', data['Type 1'], 'type')}
             ${generateRow('Type 2', data['Type 2'], 'type')}
-
-            <!-- Separator -->
             <div class="col-span-3 h-px bg-gray-200 my-2"></div>
-
-            <!-- Stat Rows -->
             ${generateRow('HP', data.HP, 'stat')}
             ${generateRow('Attack', data.Attack, 'stat')}
             ${generateRow('Defense', data.Defense, 'stat')}
             ${generateRow('Sp Atk', data['Sp Atk'], 'stat')}
             ${generateRow('Sp Def', data['Sp Def'], 'stat')}
             ${generateRow('Speed', data.Speed, 'stat')}
-            
-            <!-- Separator -->
             <div class="col-span-3 h-px bg-gray-200 my-2"></div>
-
-            <!-- BST Rows -->
             ${generateRow('BST', data.BST, 'bst')}
         `;
 
@@ -132,19 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
         switch(type) {
             case 'ability':
                 originalHtml = `<div class="text-right">${value || 'N/A'}</div>`;
-                editedHtml = `
-                    <select id="${id}" class="w-full p-1 border rounded-md">
-                        <option value="">-- Keep Original --</option>
-                        ${allAbilities.map(o => `<option value="${o}">${o}</option>`).join('')}
-                    </select>`;
+                editedHtml = `<select id="${id}" class="w-full p-1 border rounded-md"><option value="">-- Keep Original --</option>${allAbilities.map(o => `<option value="${o}">${o}</option>`).join('')}</select>`;
                 break;
             case 'type':
                  originalHtml = `<div class="flex justify-end">${value ? `<span class="px-3 py-1 rounded-full text-sm font-semibold ${getTypeClass(value)}">${value}</span>` : 'N/A'}</div>`;
-                 editedHtml = `
-                    <select id="${id}" class="w-full p-1 border rounded-md">
-                        <option value="">-- Keep Original --</option>
-                        ${allTypes.map(o => `<option value="${o}">${o}</option>`).join('')}
-                    </select>`;
+                 editedHtml = `<select id="${id}" class="w-full p-1 border rounded-md"><option value="">-- Keep Original --</option>${allTypes.map(o => `<option value="${o}">${o}</option>`).join('')}</select>`;
                 break;
             case 'stat':
                 originalHtml = `<div class="flex justify-end"><span class="font-bold text-gray-800 px-3 py-1 rounded w-full text-center ${getStatTierClass(value)}">${value}</span></div>`;
@@ -155,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 editedHtml = `<div class="flex justify-end"><span id="calculated-bst" class="font-bold text-gray-800 px-3 py-1 rounded w-full text-center"></span></div>`;
                 break;
         }
-
         return `<div class="text-gray-600">${label}:</div>${originalHtml}${editedHtml}`;
     }
 
@@ -176,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const bstDisplay = editorGrid.querySelector('#calculated-bst');
         if (bstDisplay) {
             bstDisplay.textContent = bst;
-            // --- FIX: Use the new BST-specific color function ---
             bstDisplay.className = `font-bold text-gray-800 px-3 py-1 rounded w-full text-center ${getBstTierClass(bst)}`;
         }
     }
@@ -203,8 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const finalData = {
-            '#': originalData['#'],
-            Name: originalData.Name,
+            '#': originalData['#'], Name: originalData.Name,
             'Ability 1': getFinalValue('Ability 1', originalData['Ability 1']),
             'Ability 2': getFinalValue('Ability 2', originalData['Ability 2']),
             'Hidden Ability': getFinalValue('Hidden Ability', originalData['Hidden Ability']),
@@ -219,7 +198,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         finalData.BST = finalData.HP + finalData.Attack + finalData.Defense + finalData['Sp Atk'] + finalData['Sp Def'] + finalData.Speed;
-
         customPokemon[selectedName] = finalData;
         
         updatePokemonSelector();
@@ -232,10 +210,75 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("No custom Pokémon to download!");
             return;
         }
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(Object.values(customPokemon), null, 2));
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customPokemon, null, 2));
         const downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
         downloadAnchorNode.setAttribute("download", "custom_pokemon.json");
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    }
+
+    function handleUpload(event) {
+        const file = event.target.files[0];
+        if (!file) { return; }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                if (typeof importedData === 'object' && !Array.isArray(importedData)) {
+                    customPokemon = importedData;
+                    console.log("Custom Pokémon data loaded successfully.");
+                    updateCustomList();
+                    updatePokemonSelector();
+                    selectElement.dispatchEvent(new Event('change'));
+                } else {
+                    throw new Error("Invalid JSON format. The file should contain a single object, not an array.");
+                }
+            } catch (error) {
+                alert(`Error reading JSON file: ${error.message}`);
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function handleDownloadBaseData() {
+        if (basePokemonData.length === 0) {
+            alert("Base data is not loaded yet!");
+            return;
+        }
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(basePokemonData, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "pokemon_base_data.json");
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    }
+
+    // --- NEW: Function to download the full merged data ---
+    function handleDownloadMergedData() {
+        if (basePokemonData.length === 0) {
+            alert("Base data is not loaded yet!");
+            return;
+        }
+
+        // Create a deep copy to avoid modifying the original base data in the session
+        const mergedData = JSON.parse(JSON.stringify(basePokemonData));
+
+        // Apply custom changes to the copied data
+        mergedData.forEach(pokemon => {
+            if (customPokemon[pokemon.Name]) {
+                // Overwrite the original data with the custom data for this Pokémon
+                Object.assign(pokemon, customPokemon[pokemon.Name]);
+            }
+        });
+
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mergedData, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "pokemon_merged_data.json");
         document.body.appendChild(downloadAnchorNode);
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
@@ -245,6 +288,10 @@ document.addEventListener('DOMContentLoaded', () => {
     selectElement.addEventListener('change', (e) => displayPokemon(e.target.value));
     commitBtn.addEventListener('click', handleCommit);
     downloadBtn.addEventListener('click', handleDownload);
+    uploadBtn.addEventListener('click', () => fileUpload.click());
+    fileUpload.addEventListener('change', handleUpload);
+    downloadBaseBtn.addEventListener('click', handleDownloadBaseData);
+    downloadMergedBtn.addEventListener('click', handleDownloadMergedData); // New listener
 
     // --- Initial Load ---
     initialize();

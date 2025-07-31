@@ -23,7 +23,6 @@
                     <select id="pokemon-select" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></select>
                 </div>
 
-                <!-- UPDATED: A single grid container for a perfectly aligned layout -->
                 <div id="editor-grid" class="grid grid-cols-[auto_1fr_1fr] gap-x-6 gap-y-3 items-center">
                     <!-- JavaScript will populate this entire grid -->
                 </div>
@@ -38,10 +37,21 @@
             <!-- Edited Pokémon List Panel -->
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-2xl font-semibold text-gray-800 border-b pb-2 mb-4">Custom Pokémon List</h2>
-                <div class="text-center mb-4">
-                     <button id="download-btn" class="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition-colors duration-300">
-                        Download Custom Data (JSON)
+                <div class="space-y-2 mb-4">
+                     <button id="upload-btn" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">
+                        Upload Custom JSON
                     </button>
+                     <button id="download-btn" class="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition-colors duration-300">
+                        Download Custom JSON
+                    </button>
+                     <button id="download-merged-btn" class="w-full bg-teal-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-teal-700 transition-colors duration-300">
+                        Download Merged Data
+                    </button>
+                     <button id="download-base-btn" class="w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transition-colors duration-300">
+                        Download Base Data
+                    </button>
+                    <!-- Hidden file input for the upload button -->
+                    <input type="file" id="file-upload" class="hidden" accept=".json">
                 </div>
                 <div id="edited-list" class="space-y-2 max-h-96 overflow-y-auto">
                     <p class="text-gray-500">Your custom Pokémon will appear here.</p>
