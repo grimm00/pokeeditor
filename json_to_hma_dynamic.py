@@ -2,6 +2,14 @@ import json
 import os
 import re
 
+# --- HMA Specific Formatting ---
+# Dictionary to map full type names to HMA's required abbreviations
+TYPE_ABBREVIATIONS = {
+    "Electric": "Electr",
+    "Psychic": "Psychc",
+    "Fighting": "Fight"
+}
+
 def parse_hma_stats_file(filepath):
     """
     Parses the pokemon.stats.txt file and returns a dictionary of the raw data lines,
@@ -121,32 +129,34 @@ def convert_json_to_hma_script():
                     data_part = original_line.split(f"#{name_part}#,")[1]
                     parts = robust_split(data_part)
 
-                    # CORRECTED: Check for 25 columns, not 26.
                     if len(parts) != 25:
                         print(f"  - WARNING: Malformed line #{line_num} for {species_name}. Skipping. Expected 25 columns, found {len(parts)}.")
                         full_output_lines.append(original_line)
                         continue
 
-                    # Update Stats, Types
+                    # Update Stats
                     parts[0] = str(pokemon.get('HP', parts[0]))
                     parts[1] = str(pokemon.get('Attack', parts[1]))
                     parts[2] = str(pokemon.get('Defense', parts[2]))
                     parts[3] = str(pokemon.get('Speed', parts[3]))
                     parts[4] = str(pokemon.get('Sp Atk', parts[4]))
                     parts[5] = str(pokemon.get('Sp Def', parts[5]))
-                    parts[6] = pokemon.get('Type 1', parts[6])
-                    type2 = pokemon.get('Type 2')
-                    parts[7] = type2 if type2 is not None else parts[6]
+                    
+                    # Update Types with abbreviations
+                    type1_name = pokemon.get('Type 1', parts[6])
+                    type2_name = pokemon.get('Type 2', parts[7])
+                    parts[6] = TYPE_ABBREVIATIONS.get(type1_name, type1_name)
+                    final_type2_name = type2_name if type2_name is not None else type1_name
+                    parts[7] = TYPE_ABBREVIATIONS.get(final_type2_name, final_type2_name)
 
-                    # CORRECTED: Update Abilities using numeric IDs at the correct indices for a 25-column format.
-                    # Ability 1 is at index 19, Ability 2 is at 20, Hidden Ability is at 23.
+                    # Update Abilities using numeric IDs
                     if "Ability 1" in pokemon and pokemon["Ability 1"] in ability_name_to_id:
-                        parts[19] = str(ability_name_to_id[pokemon["Ability 1"]])
+                        parts[20] = str(ability_name_to_id[pokemon["Ability 1"]])
                     
                     if "Ability 2" in pokemon:
                         ability2_name = pokemon["Ability 2"] if pokemon["Ability 2"] is not None else '-------'
                         if ability2_name in ability_name_to_id:
-                            parts[20] = str(ability_name_to_id[ability2_name])
+                            parts[21] = str(ability_name_to_id[ability2_name])
 
                     if "Hidden Ability" in pokemon:
                         hidden_ability_name = pokemon["Hidden Ability"] if pokemon["Hidden Ability"] is not None else '-------'

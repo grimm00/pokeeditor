@@ -30,7 +30,7 @@ def apply_table_formatting(worksheet):
         for cell in col:
             try:
                 if len(str(cell.value)) > max_length:
-                    max_length = len(cell.value)
+                    max_length = len(str(cell.value))
             except:
                 pass
         adjusted_width = (max_length + 2) if max_length > 0 else 12
@@ -42,8 +42,14 @@ def export_json_to_excel():
     nicely formatted Excel file.
     """
     # --- Get input from the user ---
-    input_filename = input("Enter the name of the input JSON file (e.g., custom_pokemon.json): ")
-    output_filename = input("Enter the desired name for the output Excel file (e.g., custom_pokedex.xlsx): ")
+    choice = input("Use default file paths? (Y/N): ").lower().strip()
+    if choice == 'y':
+        input_filename = "custom_pokemon.json"
+        output_filename = "custom_pokedex.xlsx"
+        print("Using default filenames in the current directory.")
+    else:
+        input_filename = input("Enter the name of the input JSON file (e.g., custom_pokemon.json): ")
+        output_filename = input("Enter the desired name for the output Excel file (e.g., custom_pokedex.xlsx): ")
 
     # Ensure the output filename has the correct extension
     if not output_filename.endswith('.xlsx'):
@@ -51,8 +57,14 @@ def export_json_to_excel():
 
     try:
         # --- Read and process the data ---
-        # Use pandas to easily read the JSON into a DataFrame
-        df = pd.read_json(input_filename)
+        with open(input_filename, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # Convert the dictionary of objects into a list of objects
+        pokemon_list = list(data.values())
+        
+        # Create DataFrame from the list
+        df = pd.DataFrame(pokemon_list)
         
         # Ensure columns are in the desired order
         desired_columns = [
